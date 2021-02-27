@@ -1,0 +1,56 @@
+﻿@page "/"
+
+@code{
+    readonly MainViewModels viewModel = new MainViewModels();
+    [Inject]
+    protected NavigationManager NavigationManager { get; set; }
+    protected override void OnInitialized()
+    {
+        (DependencyService.Get<INavigationService>() as
+        NavigationService).NavigationManager = NavigationManager;
+    }
+
+    protected override async Task OnInitializedAsync() => await viewModel.CargarCommand.ExecuteAsync();
+
+}
+
+<h1>Hello, world!</h1>
+
+Welcome to your new app.
+
+<SurveyPrompt Title="How is Blazor working for you?" />
+
+<span>@viewModel.Nombre</span>
+
+<button @onclick="viewModel.NavegarCommand.ExecuteAsync">Navegar</button>
+<button @onclick="viewModel.CargarCommand.ExecuteAsync">Cargar</button>
+
+@if (viewModel.Cargando)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Paterno</th>
+                <th>Materno</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var persona in viewModel.Personas)
+            {
+                <tr>
+                    <td>@persona.Id</td>
+                    <td>@persona.Nombre</td>
+                    <td>@persona.Paterno</td>
+                    <td>@persona.Materno</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
