@@ -1,5 +1,4 @@
-
 {
 
-    "WebAPIUrl" : "https://api.jsonbin.io/b/602c36855605851b065e4354"
+    "WebAPIUrl": "https://localhost:44392/api" // https://api.jsonbin.io/b/602c36855605851b065e4354
 }

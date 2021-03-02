@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Web;
 
-namespace Core.Models.Models
+namespace WebApplicationAPI.Models
 {
-    class Persona
+    public class Persona
     {
         public int Id { set; get; }
         public string Nombre { set; get; }

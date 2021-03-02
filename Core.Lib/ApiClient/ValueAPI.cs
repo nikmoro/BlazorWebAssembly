@@ -16,7 +16,7 @@ namespace Core.Lib.ApiClient
 
         public async Task<(HttpStatusCode StatusCode, List<Persona> Data)> Obtener()
         {
-            return await CallGetAsync<List<Persona>>("pais");
+            return await CallGetAsync<List<Persona>>("Obtener");
         }
         public async Task<(HttpStatusCode StatusCode, String Name)> Login(Credential credential)
         {
