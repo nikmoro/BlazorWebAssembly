@@ -1,45 +1,32 @@
-﻿using API.Models;
+﻿using Core.Models.Models;
 using System.Collections.Generic;
-using System.Web.Mvc;
+using System.Web.Http;
 
 namespace API.Controllers
 {
-    public class PersonaController : Controller
+    public class PersonaController : ApiController
     {
-        // GET: Persona
-        public ActionResult Index()
-        {
-            return View();
-        }
-
         List<Persona> personas = new List<Persona>();
 
-        //Como no tenemos BBDD, declaramos en el constructor las personas que estarían en nuestra BBDD
+        //Como no tenemos BBDD, declaramos en el constructor las personas que estarían en //nuestra BBDD
 
         public PersonaController()
-        {   
-            // https://es.stackoverflow.com/questions/112848/instanciar-objetos-de-clase-persona-en-una-lista
-
-            List<Persona> personas = new List<Persona>
-            {
-                new Persona { Id = 1, Nombre = "Osiel", Paterno = "Morales", Materno = "Rosales" },
-                new Persona { Id = 2, Nombre = "Nicolás", Paterno = "Morales", Materno = "Rosales" },
-                new Persona { Id = 3, Nombre = "Nombre3", Paterno = "Paterno3", Materno = "Materno3" }
-             };
-         }
+        {
+            Persona p = new Persona { Id = 1, Nombre = "Osiel", Paterno = "Morales", Materno = "Rosales" };
+            this.personas.Add(p);
+            p = new Persona { Id = 2, Nombre = "Nicolás", Paterno = "Morales", Materno = "Rosales" };
+            this.personas.Add(p);
+            p = new Persona { Id = 3, Nombre = "Nombre3", Paterno = "Paterno3", Materno = "Materno3" };
+            this.personas.Add(p);
+            p = new Persona { Id = 4, Nombre = "Nombre4", Paterno = "Paterno4", Materno = "Materno4" };
+            this.personas.Add(p);
+        }
 
         // GET api/<controller>
-        //[HttpGet]
-        //[Route("Persona/Obtener")]
+        [HttpGet]
         public List<Persona> Obtener()
         {
             return this.personas;
         }
-
-        //[Route("Persona/GetPersonas")]
-        //public List<Persona> GetPersonas()
-        //{
-        //    return this.personas;
-        //}
     }
 }
