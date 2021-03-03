@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Web;
 
-namespace Core.Models.Models
+namespace API.Models
 {
     public class Persona
     {

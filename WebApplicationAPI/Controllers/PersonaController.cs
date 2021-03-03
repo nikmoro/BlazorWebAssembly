@@ -2,7 +2,7 @@
 using System.Web.Http;
 using WebApplicationAPI.Models;
 
-namespace ServicioApiPersonas.Controllers
+namespace WebApplicationAPI.Controllers
 {
     public class PersonaController : ApiController
     {
@@ -33,12 +33,5 @@ namespace ServicioApiPersonas.Controllers
         {
             return this.personas;
         }
-
-        // GET api/<controller>/9
-        //public Persona GetPersona(int id)
-        //{
-        //    Persona p = this.personas.Find(z => z.Id == id);
-        //    return p;
-        //}
     }
 }
