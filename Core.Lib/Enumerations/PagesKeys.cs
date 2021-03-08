@@ -6,9 +6,9 @@ namespace Core.Lib.Enumerations
 {
     public enum PagesKeys
     {
-        Login, //Cada una representa una vista
+        // Cada uno representa la clave de una vista
+        Login,
         Counter,
         Crud
     }
-
 }

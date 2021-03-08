@@ -14,8 +14,9 @@ namespace Core.Lib.Bl
 
         public async Task<List<Persona>> ObtenerPersonas()
         {
-            List<Persona> Personas = new List<Persona>();
+            List<Persona> Personas = new List<Persona>();  // Instanciar lista desde la clase persona
             var response = await Api.Obtener();
+
             if(response.StatusCode == HttpStatusCode.OK)
             {
                 Personas = response.Data;

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -18,22 +16,23 @@ namespace Core.MVVM
         /// </summary>
         /// <param name="execute">Función sin parámetros que ejecuta el comando</param>
         /// <param name="canExecute">Función que evalúa si se han cumplido las condiciones para ejecutar el comando</param>
- /// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
-/// <param name="dependencies">Propiedades que debe monitorear sus cambios para notificar que las reglas de ejecución han cambiado</param>
- public RelayCommand(Action execute, Func<bool> canExecute = null, bool autoDisable
-= true, (INotifyPropertyChanged owner, string[] properties) dependencies = default)
- : base(execute, canExecute, autoDisable, dependencies) { }
+        /// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
+        /// <param name="dependencies">Propiedades que debe monitorear sus cambios para notificar que las reglas de ejecución han cambiado</param>
+        public RelayCommand(Action execute, Func<bool> canExecute = null, bool autoDisable
+        = true, (INotifyPropertyChanged owner, string[] properties) dependencies = default)
+        : base(execute, canExecute, autoDisable, dependencies) { }
+
         /// <summary>
         /// Constructor de RelayCommand asíncrono
         /// </summary>
         /// <param name="execute">Función asíncrono sin parámetros que ejecuta elcomando</param>
-/// <param name="canExecute">Función que evalúa si se han cumplido las condiciones para ejecutar el comando</param>
-/// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
- /// <param name="dependencies">Propiedades que debe monitorear sus cambios para notificar que las reglas de ejecución han cambiado</param>
- public RelayCommand(Func<Task> execute, Func<bool> canExecute = null, bool
-autoDisable = true, (INotifyPropertyChanged owner, string[] properties) dependencies =
-default)
- : base(execute, canExecute, autoDisable, dependencies) { }
+        /// <param name="canExecute">Función que evalúa si se han cumplido las condiciones para ejecutar el comando</param>
+        /// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
+        /// <param name="dependencies">Propiedades que debe monitorear sus cambios para notificar que las reglas de ejecución han cambiado</param>
+        public RelayCommand(Func<Task> execute, Func<bool> canExecute = null, bool
+        autoDisable = true, (INotifyPropertyChanged owner, string[] properties) dependencies =
+        default)
+        : base(execute, canExecute, autoDisable, dependencies) { }
     }
     [DebuggerStepThrough]
     public class RelayCommand<T> : ObservableObject, ICommand
@@ -44,10 +43,10 @@ default)
         /// </summary>
         /// <param name="execute">Función sin parámetros que ejecuta el comando</param>
         /// <param name="canExecute">Función que evalúa si se han cumplido las condiciones para ejecutar el comando</param>
- /// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
-/// <param name="dependencies">Propiedades que debe monitorear sus cambios par notificar que las reglas de ejecución han cambiado</param>
-    public RelayCommand(Action execute, Func<bool> canExecute = null, bool autoDisable
-= true, (INotifyPropertyChanged owner, string[] properties) dependencies = default)
+        /// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
+        /// <param name="dependencies">Propiedades que debe monitorear sus cambios par notificar que las reglas de ejecución han cambiado</param>
+        public RelayCommand(Action execute, Func<bool> canExecute = null, bool autoDisable
+    = true, (INotifyPropertyChanged owner, string[] properties) dependencies = default)
         {
             Action = execute;
             CanExecuteFunc = canExecute;
@@ -59,12 +58,12 @@ default)
         /// Constructor de RelayCommand asíncrono
         /// </summary>
         /// <param name="execute">Función asíncrona sin parámetros que ejecuta el comando</param>
-/// <param name="canExecute">Función que evalúa si se han cumplido las condiciones para ejecutar el comando</param>
-/// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
- /// <param name="dependencies">Propiedades que debe monitorear sus cambios para notificar que las reglas de ejecución han cambiado</param>
-public RelayCommand(Func<Task> execute, Func<bool> canExecute = null, bool
-autoDisable = true, (INotifyPropertyChanged owner, string[] properties) dependencies =
-default)
+        /// <param name="canExecute">Función que evalúa si se han cumplido las condiciones para ejecutar el comando</param>
+        /// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
+        /// <param name="dependencies">Propiedades que debe monitorear sus cambios para notificar que las reglas de ejecución han cambiado</param>
+        public RelayCommand(Func<Task> execute, Func<bool> canExecute = null, bool
+        autoDisable = true, (INotifyPropertyChanged owner, string[] properties) dependencies =
+        default)
         {
             ActionAsync = execute;
             CanExecuteFunc = canExecute;
@@ -77,11 +76,11 @@ default)
         /// </summary>
         /// <param name="execute">Función con parámetros que ejecuta el comando</param>
         /// <param name="canExecute">Función que evalúa si se han cumplido las condiciones para ejecutar el comando</param>
- /// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
-/// <param name="dependencies">Propiedades que debe monitorear sus cambios para notificar que las reglas de ejecución han cambiado</param>
-    public RelayCommand(Action<T> execute, Func<T, bool> canExecute = null, bool
-autoDisable = true, (INotifyPropertyChanged owner, string[] properties) dependencies =
-default)
+        /// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
+        /// <param name="dependencies">Propiedades que debe monitorear sus cambios para notificar que las reglas de ejecución han cambiado</param>
+        public RelayCommand(Action<T> execute, Func<T, bool> canExecute = null, bool
+    autoDisable = true, (INotifyPropertyChanged owner, string[] properties) dependencies =
+    default)
         {
             ActionGeneric = execute;
             CanExecuteFuncGeneric = canExecute;
@@ -93,12 +92,12 @@ default)
         /// Constructor de RelayCommand asíncrono con parámetros
         /// </summary>
         /// <param name="execute">Función asíncrona con parámetros que ejecuta el comando</param>
-/// <param name="canExecute">Función que evalúa si se han cumplido las condiciones ejecutar el comando</param>
-/// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
- /// <param name="dependencies">Propiedades que debe monitorear sus cambios para notificar que las reglas de ejecución han cambiado</param>
- public RelayCommand(Func<T, Task> execute, Func<T, bool> canExecute = null, bool
-autoDisable = true, (INotifyPropertyChanged owner, string[] properties) dependencies =
-default)
+        /// <param name="canExecute">Función que evalúa si se han cumplido las condiciones ejecutar el comando</param>
+        /// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
+        /// <param name="dependencies">Propiedades que debe monitorear sus cambios para notificar que las reglas de ejecución han cambiado</param>
+        public RelayCommand(Func<T, Task> execute, Func<T, bool> canExecute = null, bool
+       autoDisable = true, (INotifyPropertyChanged owner, string[] properties) dependencies =
+       default)
         {
             ActionGenericAsync = execute;
             CanExecuteFuncGeneric = canExecute;
@@ -144,8 +143,8 @@ default)
         }
         /// <summary>
         /// Función sin parámetros que evalúa si se cumplen las condicioens para ejecutar el comando
-    /// </summary>
-    /// <returns>Si se puede o no ejecutar el comando</returns>
+        /// </summary>
+        /// <returns>Si se puede o no ejecutar el comando</returns>
         public bool CanExecute() => CanExecute(null);
         /// <summary>
         /// Ejecuta sin parámetros el comando

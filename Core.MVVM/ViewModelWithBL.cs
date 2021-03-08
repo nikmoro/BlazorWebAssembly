@@ -9,6 +9,7 @@ namespace Core.MVVM
     {
         readonly protected T bl;
         public ViewModelWithBL() => bl = new T();
+
         public ViewModelWithBL(T bl) => this.bl = bl;
     }
 

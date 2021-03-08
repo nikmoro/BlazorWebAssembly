@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Web;
 
-namespace Core.Models.Models
+namespace API.Models
 {
-    public class Persona /*INotifyPropertyChanged*/
+    public class Persona
     {
         public int Id { set; get; }
         public string Nombre { set; get; }

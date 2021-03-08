@@ -18,6 +18,7 @@ namespace Core.MVVM
         /// Fires when any observable property changes
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
         /// <summary>
         /// Sets property value and notify changes
         /// </summary>
@@ -25,13 +26,13 @@ namespace Core.MVVM
         /// <param name="field">Internal variable for storage</param>
         /// <param name="newValue">New value</param>
         /// <param name="propertyName">Property name</param>
-        protected void Set<T>(ref T field, T newValue = default, [CallerMemberName] string
-propertyName = null)
+        protected void Set<T>(ref T field, T newValue = default, [CallerMemberName] string propertyName = null)
         {
             field = newValue;
             Validate(field, propertyName);
             RaisePropertyChanged(propertyName);
         }
+
         /// <summary>
         /// Sends notification for property changes
         /// </summary>

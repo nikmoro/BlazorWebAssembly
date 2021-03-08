@@ -13,9 +13,7 @@
   </ItemGroup>
 
   <Import Project="..\Core.Lib\Core.Lib.projitems" Label="Shared" />
-
   <Import Project="..\Core.Models\Core.Models.projitems" Label="Shared" />
-
   <Import Project="..\Core.MVVM\Core.MVVM.projitems" Label="Shared" />
 
 </Project>

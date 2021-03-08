@@ -1,4 +1,6 @@
-﻿using Core.Models.Models;
+﻿
+
+using Core.Models.Models;
 using System.Collections.Generic;
 using System.Web.Http;
 
@@ -8,10 +10,11 @@ namespace API.Controllers
     {
         List<Persona> personas = new List<Persona>();
 
-        //Como no tenemos BBDD, declaramos en el constructor las personas que estarían en //nuestra BBDD
+        //Como no tenemos BBDD, declaramos en el constructor las personas que estarían en nuestra BBDD
 
         public PersonaController()
         {
+            // https://es.stackoverflow.com/questions/112848/instanciar-objetos-de-clase-persona-en-una-lista
             Persona p = new Persona { Id = 1, Nombre = "Osiel", Paterno = "Morales", Materno = "Rosales" };
             this.personas.Add(p);
             p = new Persona { Id = 2, Nombre = "Nicolás", Paterno = "Morales", Materno = "Rosales" };

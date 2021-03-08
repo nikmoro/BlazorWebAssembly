@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using System.Text;
 using System.Threading.Tasks;
 namespace Core.Lib.ApiClient
 {
@@ -29,7 +28,7 @@ namespace Core.Lib.ApiClient
             }
             InitHeaders();
         }
-        public string UrlBaseWebApi { get; set; } = string.Empty;
+        public string UrlBaseWebApi { get; set; } = string.Empty; //"https://localhost:44339/";
         string urlController;
         protected string UrlController
         {
@@ -234,7 +233,7 @@ namespace Core.Lib.ApiClient
        fileName, string mediaType, HttpContent extraContent = null, string extraName = "")
         {
             //http://stackoverflow.com/questions/16416601/c-sharp-httpclient-4-5- multipart - form - data - upload
-        using var requestContent = new MultipartFormDataContent();
+            using var requestContent = new MultipartFormDataContent();
             using var imageContent = new ByteArrayContent(file);
             imageContent.Headers.ContentType = MediaTypeHeaderValue.Parse(mediaType);
             requestContent.Add(imageContent, contentName, fileName);

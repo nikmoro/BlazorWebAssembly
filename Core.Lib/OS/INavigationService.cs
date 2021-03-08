@@ -23,9 +23,9 @@ namespace Core.Lib.OS
         /// <returns></returns>
         Task PushModal(string pageKey);
         /// <summary>Navigate to a page without the page requiring any parameters</summary>
-/// <param name="pageKey"></param>
-/// <returns></returns>
-Task NavigateTo(PagesKeys pageKey);
+        /// <param name="pageKey"></param>
+        /// <returns></returns>
+        Task NavigateTo(PagesKeys pageKey);
         /// <summary>Navigate to a page with parameters</summary>
         /// <param name="pageKey"></param>
         /// <param name="parameter"></param>
