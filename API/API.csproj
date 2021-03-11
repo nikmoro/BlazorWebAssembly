@@ -220,6 +220,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\Login\" />
+    <Folder Include="Views\Personas\" />
     <Folder Include="Views\Persona\" />
   </ItemGroup>
   <ItemGroup>
