@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Runtime.CompilerServices;
+﻿using System.Runtime.CompilerServices;
 
 
 namespace Core.Lib.OS
 {
     interface ISettingsStorage
     {
-        void SetValue<T>(T newValue = default, [CallerMemberName] string propertyName =
-null);
+        void SetValue<T>(T newValue = default, [CallerMemberName] string propertyName = null);
         T GetValue<T>([CallerMemberName] string propertyName = null);
     }
 }

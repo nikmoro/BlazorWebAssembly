@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Core.MVVM
+﻿namespace Core.MVVM
 {
     public abstract class ViewModelBase : ObservableObject
     {
@@ -13,7 +9,7 @@ namespace Core.MVVM
         /// Indicates that is loading or getting data
         /// </summary>
         public bool Loading { get => loading; set => Set(ref loading, value); }
-        
+
         private bool processing;
 
         /// <summary>

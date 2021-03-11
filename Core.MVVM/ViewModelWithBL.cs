@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Core.MVVM
+﻿namespace Core.MVVM
 {
-
     public class ViewModelWithBL<T> : ViewModelBase where T : new()
     {
         readonly protected T bl;
@@ -12,5 +7,4 @@ namespace Core.MVVM
 
         public ViewModelWithBL(T bl) => this.bl = bl;
     }
-
 }

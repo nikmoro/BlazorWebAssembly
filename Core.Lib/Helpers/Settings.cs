@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using Core.Lib.OS;
+﻿using Core.Lib.OS;
 using Core.MVVM;
+using System;
 using System.Runtime.CompilerServices;
 
 
@@ -16,7 +14,7 @@ namespace Core.Lib.Helpers
         [ThreadStatic]
         static Settings current;
         public static Settings Current => current ??= new Settings();
-        
+
         private string webAPilUrl;
         public string WebAPIUrl { get => GetValue<string>(); set => SetValue(ref webAPilUrl, value); }
 

@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace ApiCore.Model
+﻿namespace ApiCore.Model
 {
     public class Persona
     {

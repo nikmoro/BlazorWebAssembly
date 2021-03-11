@@ -1,9 +1,7 @@
 ﻿using Core.Lib.ApiClient;
 using Core.Models.Models;
-using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Core.Lib.Bl
@@ -17,7 +15,7 @@ namespace Core.Lib.Bl
             List<Persona> Personas = new List<Persona>();  // Instanciar lista desde la clase persona
             var response = await Api.Obtener();
 
-            if(response.StatusCode == HttpStatusCode.OK)
+            if (response.StatusCode == HttpStatusCode.OK)
             {
                 Personas = response.Data;
             }

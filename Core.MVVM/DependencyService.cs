@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace Core.MVVM
 {
@@ -15,48 +14,55 @@ namespace Core.MVVM
             /// For internal use only
             /// </summary>
             Default = -1,
+
             /// <summary>
             /// Creates a single instance of the service. All components requiring a
             ///Singleton service receive an instance of the same service.
             /// </summary>
             Singleton = 0,
+
             /// <summary>
             /// A scoped service registration is scoped to the connection
             /// </summary>
             Scoped = 1,
+
             /// <summary>
             /// Whenever a component obtains an instance of a Transient service from the
             ///service container, it receives a new instance of the service.
             /// </summary>
             Transient = 2,
         }
+
         /// <summary>
         /// Defualt lifetime for each dependency registered
         /// </summary>
-        public static ServiceLifetime DefaultLifetime { get; set; } =
-       ServiceLifetime.Transient;
+        public static ServiceLifetime DefaultLifetime { get; set; } = ServiceLifetime.Transient;
+
         /// <summary>
         /// Registered dependency
         /// </summary>
         static Dictionary<Type, (ServiceLifetime Lifetime, Type Type, (Func<object>
-       ImplementationFactory, object Instance) Dependency)> Dependencies
+        ImplementationFactory, object Instance) Dependency)> Dependencies
         { get; set; } = new
-       Dictionary<Type, (ServiceLifetime, Type, (Func<object>, object))>();
+        Dictionary<Type, (ServiceLifetime, Type, (Func<object>, object))>();
+
         /// <summary>
         /// Registers a dependency with Lifetime, constructor implementation and/orinstance
- /// </summary>
- /// <typeparam name="C">Class that implements dependency</typeparam>
- /// <typeparam name="I">Interface shared</typeparam>
- /// <param name="lifetime">Lifetime for instance</param>
- /// <param name="implementationFactory">Function to get an instance</param>
- /// <param name="instance">Specific instance</param>
- public static void Register<C, I>(ServiceLifetime lifetime =
-ServiceLifetime.Default, Func<object> implementationFactory = null, C instance = default)
-where C : class, I, new()
+        /// </summary>
+        /// <typeparam name="C">Class that implements dependency</typeparam>
+        /// <typeparam name="I">Interface shared</typeparam>
+        /// <param name="lifetime">Lifetime for instance</param>
+        /// <param name="implementationFactory">Function to get an instance</param>
+        /// <param name="instance">Specific instance</param>
+
+        public static void Register<C, I>(ServiceLifetime lifetime =
+        ServiceLifetime.Default, Func<object> implementationFactory = null, C instance = default)
+        where C : class, I, new()
         {
             if (lifetime == ServiceLifetime.Default) lifetime = DefaultLifetime;
+
             void Add((ServiceLifetime Lifetime, Type Type, (Func<object>
-           ImplementationFactory, object Instance) Dependency) value)
+            ImplementationFactory, object Instance) Dependency) value)
             {
                 value.Lifetime = lifetime;
                 value.Type = typeof(C);
@@ -64,6 +70,7 @@ where C : class, I, new()
                 value.Dependency.Instance = instance;
                 Dependencies.Add(typeof(I), value);
             }
+
             if (!Dependencies.TryGetValue(typeof(I), out var dep))
             {
                 Add((lifetime, typeof(C), (implementationFactory, instance)));
@@ -75,16 +82,19 @@ where C : class, I, new()
                 Add(dep);
             }
         }
+
         /// <summary>
         /// Registers a singleton dependency
         /// </summary>
         /// <typeparam name="C"></typeparam>
         /// <param name="instance"></param>
+        /// 
         public static void Register<C>(C instance = default, Func<object>
-       implementationFactory = null) where C : class, new()
+        implementationFactory = null) where C : class, new()
         {
             Register<C, C>(ServiceLifetime.Singleton, implementationFactory, instance);
         }
+
         /// <summary>
         /// Get instance of dependency
         /// </summary>
@@ -108,7 +118,7 @@ where C : class, I, new()
                         if (dep.Dependency.Instance == null)
                         {
                             dep.Dependency.Instance = GetInstance();
-                            Dependencies[typeof(I)] = dep;//Tupplas are not refrerenced objects, so we need set new value to dictionary
+                            Dependencies[typeof(I)] = dep;  // Tupplas are not refrerenced objects, so we need set new value to dictionary
                         }
                         return (I)dep.Dependency.Instance;
                     case ServiceLifetime.Transient:
@@ -119,6 +129,7 @@ where C : class, I, new()
             else
                 throw new KeyNotFoundException($"Unregistered {typeof(I).Name} type");
         }
+
         /// <summary>
         /// Release resources of dependency
         /// </summary>

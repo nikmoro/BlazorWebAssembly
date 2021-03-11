@@ -28,8 +28,10 @@ namespace Core.Lib.ApiClient
             }
             InitHeaders();
         }
+
         public string UrlBaseWebApi { get; set; } = string.Empty; //"https://localhost:44339/";
         string urlController;
+
         protected string UrlController
         {
             get => urlController;
@@ -41,13 +43,16 @@ namespace Core.Lib.ApiClient
                 BaseAddress = new Uri(UrlBaseWebApi);
             }
         }
+
         protected virtual void InitHeaders()
         {
             DefaultRequestHeaders.Accept.Add(new
            MediaTypeWithQualityHeaderValue("application/json"));
         }
+
         private async Task<(HttpStatusCode StatusCode, TResponse Content)>
-       ProcessResponse<TResponse>(HttpRequestMessage requestMessage)
+
+        ProcessResponse<TResponse>(HttpRequestMessage requestMessage)
         {
             try
             {
@@ -67,8 +72,9 @@ namespace Core.Lib.ApiClient
                 return default;
             }
         }
+
         public async Task<(HttpStatusCode StatusCode, TResponse Content)>
-       CallAsync<TResponse>(HttpMethod method, string url, HttpContent content = null)
+        CallAsync<TResponse>(HttpMethod method, string url, HttpContent content = null)
         {
             using var requestMessage = new HttpRequestMessage(method, url);
             if (!requestMessage.RequestUri.IsAbsoluteUri)
@@ -76,11 +82,12 @@ namespace Core.Lib.ApiClient
             if (content != null) requestMessage.Content = content;
             return await ProcessResponse<TResponse>(requestMessage);
         }
+
         public async Task<(HttpStatusCode StatusCode, TResponse Content)>
-       CallGetAsync<TResponse>(string url) =>
-        await CallAsync<TResponse>(HttpMethod.Get, url);
+        CallGetAsync<TResponse>(string url) => await CallAsync<TResponse>(HttpMethod.Get, url);
+
         public async Task<(HttpStatusCode StatusCode, TResponse Content)>
-       CallGetAsync<TResponse>(string url, params (string, object)[] parameters)
+        CallGetAsync<TResponse>(string url, params (string, object)[] parameters)
         {
             try
             {
@@ -101,11 +108,13 @@ namespace Core.Lib.ApiClient
                 throw ex;
             }
         }
+
         public async Task<(HttpStatusCode StatusCode, TResponse Content)>
-       CallPostAsync<TRequest, TResponse>(string url, TRequest req) =>
+        CallPostAsync<TRequest, TResponse>(string url, TRequest req) =>
         await CallAsync<TResponse>(HttpMethod.Post, url, JsonContent.Create(req));
+
         public async Task<(HttpStatusCode StatusCode, TResponse Content)>
-       CallPostAsync<TResponse>(string url, params (string, object)[] parameters)
+        CallPostAsync<TResponse>(string url, params (string, object)[] parameters)
         {
             try
             {
@@ -126,14 +135,15 @@ namespace Core.Lib.ApiClient
                 throw ex;
             }
         }
+
         public async Task<(HttpStatusCode StatusCode, TResponse Content)>
-       CallPutAsync<TRequest, TResponse>(string url, TRequest req) =>
+        CallPutAsync<TRequest, TResponse>(string url, TRequest req) =>
         await CallAsync<TResponse>(HttpMethod.Put, url, JsonContent.Create(req));
+
         public async Task<(HttpStatusCode StatusCode, TResponse Content)>
-       CallDeleteAsync<TResponse>(string url) =>
-        await CallAsync<TResponse>(HttpMethod.Delete, url);
-        private async Task<HttpStatusCode> ProcessResponse(HttpRequestMessage
-       requestMessage)
+        CallDeleteAsync<TResponse>(string url) => await CallAsync<TResponse>(HttpMethod.Delete, url);
+
+        private async Task<HttpStatusCode> ProcessResponse(HttpRequestMessage requestMessage)
         {
             try
             {
@@ -145,27 +155,30 @@ namespace Core.Lib.ApiClient
                 return default;
             }
         }
-        public async Task<HttpStatusCode> CallAsync(HttpMethod method, string url,
-       HttpContent content = null)
+
+        public async Task<HttpStatusCode> CallAsync(HttpMethod method, string url, HttpContent content = null)
         {
             using var requestMessage = new HttpRequestMessage(method, url);
+
             if (!requestMessage.RequestUri.IsAbsoluteUri)
                 requestMessage.RequestUri = new Uri(UrlBaseWebApi + url);
             if (content != null) requestMessage.Content = content;
             return await ProcessResponse(requestMessage);
         }
-        public async Task<HttpStatusCode> CallPostAsync<TRequest>(string url, TRequest
-       req) =>
+
+        public async Task<HttpStatusCode> CallPostAsync<TRequest>(string url, TRequest req) =>
         await CallAsync(HttpMethod.Post, url, JsonContent.Create(req));
-        public async Task<HttpStatusCode> CallPostAsync(string url, params (string,
-       object)[] parameters)
+
+        public async Task<HttpStatusCode> CallPostAsync(string url, params (string, object)[] parameters)
         {
             try
             {
                 var sb = new StringBuilder();
+
                 if (parameters.Length > 0)
                 {
                     sb.Append("?");
+
                     foreach (var param in parameters)
                     {
                         sb.Append($"{param.Item1}={param.Item2}&");
@@ -179,10 +192,10 @@ namespace Core.Lib.ApiClient
                 throw ex;
             }
         }
-        public async Task<HttpStatusCode> CallDeleteAsync(string url) =>
-        await CallAsync(HttpMethod.Delete, url);
-        public async Task<HttpStatusCode> CallDeleteAsync(string url, params (string,
-       object)[] parameters)
+
+        public async Task<HttpStatusCode> CallDeleteAsync(string url) => await CallAsync(HttpMethod.Delete, url);
+
+        public async Task<HttpStatusCode> CallDeleteAsync(string url, params (string, object)[] parameters)
         {
             try
             {
@@ -190,6 +203,7 @@ namespace Core.Lib.ApiClient
                 if (parameters.Length > 0)
                 {
                     sb.Append("?");
+
                     foreach (var param in parameters)
                     {
                         sb.Append($"{param.Item1}={param.Item2}&");
@@ -203,8 +217,9 @@ namespace Core.Lib.ApiClient
                 throw ex;
             }
         }
+
         public async Task<(HttpStatusCode StatusCode, TResponse Content)>
-       CallDeleteAsync<TResponse>(string url, params (string, object)[] parameters)
+        CallDeleteAsync<TResponse>(string url, params (string, object)[] parameters)
         {
             try
             {
@@ -212,6 +227,7 @@ namespace Core.Lib.ApiClient
                 if (parameters.Length > 0)
                 {
                     sb.Append("?");
+
                     foreach (var param in parameters)
                     {
                         sb.Append($"{param.Item1}={param.Item2}&");
@@ -225,18 +241,21 @@ namespace Core.Lib.ApiClient
                 throw ex;
             }
         }
-        public async Task<HttpStatusCode> CallPutAsync<TRequest>(string url, TRequest
-       req) =>
+
+        public async Task<HttpStatusCode> CallPutAsync<TRequest>(string url, TRequest req) =>
         await CallAsync(HttpMethod.Put, url, JsonContent.Create(req));
+
         public async Task<(HttpStatusCode StatusCode, TResponse Content)>
-       CallPostFileAsync<TResponse>(string url, byte[] file, string contentName, string
-       fileName, string mediaType, HttpContent extraContent = null, string extraName = "")
+        CallPostFileAsync<TResponse>(string url, byte[] file, string contentName, string
+        fileName, string mediaType, HttpContent extraContent = null, string extraName = "")
         {
-            //http://stackoverflow.com/questions/16416601/c-sharp-httpclient-4-5- multipart - form - data - upload
+            // http://stackoverflow.com/questions/16416601/c-sharp-httpclient-4-5- multipart - form - data - upload
+
             using var requestContent = new MultipartFormDataContent();
             using var imageContent = new ByteArrayContent(file);
             imageContent.Headers.ContentType = MediaTypeHeaderValue.Parse(mediaType);
             requestContent.Add(imageContent, contentName, fileName);
+
             if (extraContent != null)
                 requestContent.Add(extraContent, extraName);
             return await CallAsync<TResponse>(HttpMethod.Post, url, requestContent);

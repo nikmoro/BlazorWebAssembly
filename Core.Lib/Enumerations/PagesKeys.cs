@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Core.Lib.Enumerations
+﻿namespace Core.Lib.Enumerations
 {
     public enum PagesKeys
     {

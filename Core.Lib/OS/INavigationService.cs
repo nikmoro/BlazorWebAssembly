@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Core.Lib.Enumerations;
 using System.Threading.Tasks;
-using Core.Lib.Enumerations;
 
 namespace Core.Lib.OS
 {
@@ -11,21 +8,26 @@ namespace Core.Lib.OS
         /// <summary>Navigate to previous view</summary>
         /// <returns></returns>
         Task GoBack();
+
         /// <summary>Clean a navigation stack to the root</summary>
         /// <returns></returns>
         Task Home();
+
         /// <summary>Used to remove a modal</summary>
         /// <returns></returns>
         Task PopModal();
+
         /// <summary>Show a modal</summary>
         /// <param name="pageKey"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
         Task PushModal(string pageKey);
+
         /// <summary>Navigate to a page without the page requiring any parameters</summary>
         /// <param name="pageKey"></param>
         /// <returns></returns>
         Task NavigateTo(PagesKeys pageKey);
+
         /// <summary>Navigate to a page with parameters</summary>
         /// <param name="pageKey"></param>
         /// <param name="parameter"></param>

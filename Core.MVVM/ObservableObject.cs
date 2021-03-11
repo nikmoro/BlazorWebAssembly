@@ -11,8 +11,7 @@ using System.Runtime.CompilerServices;
 
 namespace Core.MVVM
 {
-    public abstract class ObservableObject : INotifyPropertyChanged, IDisposable,
-    INotifyDataErrorInfo
+    public abstract class ObservableObject : INotifyPropertyChanged, IDisposable, INotifyDataErrorInfo
     {
         /// <summary>
         /// Fires when any observable property changes
@@ -26,6 +25,7 @@ namespace Core.MVVM
         /// <param name="field">Internal variable for storage</param>
         /// <param name="newValue">New value</param>
         /// <param name="propertyName">Property name</param>
+
         protected void Set<T>(ref T field, T newValue = default, [CallerMemberName] string propertyName = null)
         {
             field = newValue;
@@ -38,21 +38,22 @@ namespace Core.MVVM
         /// </summary>
         /// <param name="propertyName">Property name</param>
         /// <remarks>Preferably use nameof</remarks>
-        public virtual void RaisePropertyChanged([CallerMemberName] string propertyName =
-       null) =>
+
+        public virtual void RaisePropertyChanged([CallerMemberName] string propertyName = null) =>
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        protected virtual void RaisePropertyChanged<T>(Expression<Func<T>>
-       propertyExpression) =>
-        PropertyChanged?.Invoke(this, new
-       PropertyChangedEventArgs(((propertyExpression.Body as MemberExpression)?.Member as
-       PropertyInfo)?.Name));
+
+        protected virtual void RaisePropertyChanged<T>(Expression<Func<T>> propertyExpression) =>
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(((propertyExpression.Body as MemberExpression)?.Member as
+        PropertyInfo)?.Name));
+
         #region INotifyDataErrorInfo
         private ObservableCollection<ErrorInfo> messagesErrors;
+
         public ObservableCollection<ErrorInfo> MessagesErrors
         {
-            get => messagesErrors; set
-    => Set(ref messagesErrors, value);
+            get => messagesErrors; set => Set(ref messagesErrors, value);
         }
+
         public string ValidationSumary
         {
             get
@@ -64,65 +65,69 @@ namespace Core.MVVM
                 return res.ToString();
             }
         }
+
         protected readonly Dictionary<string, ObservableCollection<ValidationResult>>
-       Errors = new Dictionary<string, ObservableCollection<ValidationResult>>();
+        Errors = new Dictionary<string, ObservableCollection<ValidationResult>>();
+
         public event EventHandler<DataErrorsChangedEventArgs> ErrorsChanged;
-        public bool HasErrors => Errors.Count > 0 || (MessagesErrors != null &&
-       MessagesErrors.Count > 0);
+        public bool HasErrors => Errors.Count > 0 || (MessagesErrors != null && MessagesErrors.Count > 0);
+
         public IEnumerable GetErrors([CallerMemberName] string propertyName = "")
         {
             return propertyName != null && Errors.ContainsKey(propertyName)
             ? Errors[propertyName]
             : new ObservableCollection<ValidationResult>();
         }
-        public bool Validate(object value, [CallerMemberName] string propertyName = "",
-       bool notifyError = true)
+
+        public bool Validate(object value, [CallerMemberName] string propertyName = "", bool notifyError = true)
         {
             var results = new ObservableCollection<ValidationResult>();
             var context = new ValidationContext(this, null, null)
             {
-                MemberName =
-           propertyName
+                MemberName = propertyName
             };
+
             Validator.TryValidateProperty(value, context, results);
+
             if (notifyError)
             {
-                if (MessagesErrors == null) MessagesErrors = new
-               ObservableCollection<ErrorInfo>();
-                var erroresEmptys = MessagesErrors.Where(e =>
-               string.IsNullOrEmpty(e.PropertyName)).ToList();
+                if (MessagesErrors == null) MessagesErrors = new ObservableCollection<ErrorInfo>();
+                var erroresEmptys = MessagesErrors.Where(e => string.IsNullOrEmpty(e.PropertyName)).ToList();
+
                 foreach (var error in erroresEmptys)
                 {
                     MessagesErrors.Remove(error);
                 }
+
                 if (Errors.ContainsKey(propertyName))
                 {
                     Errors.Remove(propertyName);
-                    var messages = MessagesErrors.Where(m => m.PropertyName ==
-                   propertyName).ToList();
+                    var messages = MessagesErrors.Where(m => m.PropertyName == propertyName).ToList();
+
                     foreach (var message in messages)
                     {
                         MessagesErrors.Remove(message);
                     }
+
                     NotifyErrorChange(propertyName);
                 }
+
                 if (results.Count > 0)
                 {
                     if (!Errors.ContainsKey(propertyName))
                     {
-                        Errors.Add(propertyName, new
-                       ObservableCollection<ValidationResult>());
+                        Errors.Add(propertyName, new ObservableCollection<ValidationResult>());
                     }
+
                     foreach (var result in results)
                     {
-                        Errors[propertyName].Add(new
-                       ValidationResult(result.ErrorMessage));
+                        Errors[propertyName].Add(new ValidationResult(result.ErrorMessage));
+
                         if (!MessagesErrors.Contains(MessagesErrors.Where(m =>
-                       m.PropertyName == propertyName).FirstOrDefault()))
+                        m.PropertyName == propertyName).FirstOrDefault()))
                             MessagesErrors.Add(new ErrorInfo()
                             {
-                                PropertyName =
-                           propertyName,
+                                PropertyName = propertyName,
                                 ErrorMessage = result.ErrorMessage
                             });
                     }
@@ -131,20 +136,24 @@ namespace Core.MVVM
             }
             return results.Count == 0;
         }
+
         private void NotifyErrorChange(string propertyName)
         {
             RaisePropertyChanged(nameof(ValidationSumary));
             RaisePropertyChanged(nameof(HasErrors));
             ErrorsChanged?.Invoke(this, new DataErrorsChangedEventArgs(propertyName));
         }
+
         protected bool Validate(object valueObject, bool notifyErrors = true)
         {
             var results = new ObservableCollection<ValidationResult>();
             var context = new ValidationContext(this, null, null);
             Validator.TryValidateObject(valueObject, context, results);
+
             if (notifyErrors)
             {
                 MessagesErrors = new ObservableCollection<ErrorInfo>();
+
                 if (results.Count > 0)
                 {
                     foreach (var result in results)
@@ -160,19 +169,24 @@ namespace Core.MVVM
             }
             return results.Count == 0;
         }
+
         public virtual bool Validate() => true;
         #endregion
+
         #region IDisposable
         bool disposed = false;
+
         /// <summary>
         /// Delegate thar most explicit release resources usage.
         /// </summary>
         protected Action DisposeResources;
+
         public void Dispose()
         {
             Dispose(true);
             GC.SuppressFinalize(this);
         }
+
         protected virtual void Dispose(bool disposing)
         {
             if (!disposed)

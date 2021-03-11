@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-
 namespace Core.MVVM
 {
     [DebuggerStepThrough]
@@ -18,6 +17,7 @@ namespace Core.MVVM
         /// <param name="canExecute">Función que evalúa si se han cumplido las condiciones para ejecutar el comando</param>
         /// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
         /// <param name="dependencies">Propiedades que debe monitorear sus cambios para notificar que las reglas de ejecución han cambiado</param>
+
         public RelayCommand(Action execute, Func<bool> canExecute = null, bool autoDisable
         = true, (INotifyPropertyChanged owner, string[] properties) dependencies = default)
         : base(execute, canExecute, autoDisable, dependencies) { }
@@ -29,11 +29,12 @@ namespace Core.MVVM
         /// <param name="canExecute">Función que evalúa si se han cumplido las condiciones para ejecutar el comando</param>
         /// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
         /// <param name="dependencies">Propiedades que debe monitorear sus cambios para notificar que las reglas de ejecución han cambiado</param>
+
         public RelayCommand(Func<Task> execute, Func<bool> canExecute = null, bool
         autoDisable = true, (INotifyPropertyChanged owner, string[] properties) dependencies =
-        default)
-        : base(execute, canExecute, autoDisable, dependencies) { }
+        default) : base(execute, canExecute, autoDisable, dependencies) { }
     }
+
     [DebuggerStepThrough]
     public class RelayCommand<T> : ObservableObject, ICommand
     {
@@ -45,15 +46,18 @@ namespace Core.MVVM
         /// <param name="canExecute">Función que evalúa si se han cumplido las condiciones para ejecutar el comando</param>
         /// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
         /// <param name="dependencies">Propiedades que debe monitorear sus cambios par notificar que las reglas de ejecución han cambiado</param>
+
         public RelayCommand(Action execute, Func<bool> canExecute = null, bool autoDisable
-    = true, (INotifyPropertyChanged owner, string[] properties) dependencies = default)
+        = true, (INotifyPropertyChanged owner, string[] properties) dependencies = default)
         {
             Action = execute;
             CanExecuteFunc = canExecute;
             AutoDisableWhenProcessing = autoDisable;
+
             if (dependencies.owner != null)
                 RaiseCanExecuteDependencies(dependencies.owner, dependencies.properties);
         }
+
         /// <summary>
         /// Constructor de RelayCommand asíncrono
         /// </summary>
@@ -61,16 +65,18 @@ namespace Core.MVVM
         /// <param name="canExecute">Función que evalúa si se han cumplido las condiciones para ejecutar el comando</param>
         /// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
         /// <param name="dependencies">Propiedades que debe monitorear sus cambios para notificar que las reglas de ejecución han cambiado</param>
+
         public RelayCommand(Func<Task> execute, Func<bool> canExecute = null, bool
-        autoDisable = true, (INotifyPropertyChanged owner, string[] properties) dependencies =
-        default)
+        autoDisable = true, (INotifyPropertyChanged owner, string[] properties) dependencies = default)
         {
             ActionAsync = execute;
             CanExecuteFunc = canExecute;
             AutoDisableWhenProcessing = autoDisable;
+
             if (dependencies.owner != null)
                 RaiseCanExecuteDependencies(dependencies.owner, dependencies.properties);
         }
+
         /// <summary>
         /// Constructor de RelayCommand con parámetros
         /// </summary>
@@ -78,16 +84,18 @@ namespace Core.MVVM
         /// <param name="canExecute">Función que evalúa si se han cumplido las condiciones para ejecutar el comando</param>
         /// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
         /// <param name="dependencies">Propiedades que debe monitorear sus cambios para notificar que las reglas de ejecución han cambiado</param>
+
         public RelayCommand(Action<T> execute, Func<T, bool> canExecute = null, bool
-    autoDisable = true, (INotifyPropertyChanged owner, string[] properties) dependencies =
-    default)
+        autoDisable = true, (INotifyPropertyChanged owner, string[] properties) dependencies = default)
         {
             ActionGeneric = execute;
             CanExecuteFuncGeneric = canExecute;
             AutoDisableWhenProcessing = autoDisable;
+
             if (dependencies.owner != null)
                 RaiseCanExecuteDependencies(dependencies.owner, dependencies.properties);
         }
+
         /// <summary>
         /// Constructor de RelayCommand asíncrono con parámetros
         /// </summary>
@@ -95,17 +103,19 @@ namespace Core.MVVM
         /// <param name="canExecute">Función que evalúa si se han cumplido las condiciones ejecutar el comando</param>
         /// <param name="autoDisable">Deshabilita el comando mientrase se esté ejecutando</param>
         /// <param name="dependencies">Propiedades que debe monitorear sus cambios para notificar que las reglas de ejecución han cambiado</param>
+
         public RelayCommand(Func<T, Task> execute, Func<T, bool> canExecute = null, bool
-       autoDisable = true, (INotifyPropertyChanged owner, string[] properties) dependencies =
-       default)
+        autoDisable = true, (INotifyPropertyChanged owner, string[] properties) dependencies = default)
         {
             ActionGenericAsync = execute;
             CanExecuteFuncGeneric = canExecute;
             AutoDisableWhenProcessing = autoDisable;
+
             if (dependencies.owner != null)
                 RaiseCanExecuteDependencies(dependencies.owner, dependencies.properties);
         }
         #endregion
+
         #region Properties
         private Action Action { get; set; }
         private Func<Task> ActionAsync { get; set; }
@@ -115,6 +125,7 @@ namespace Core.MVVM
         private Func<T, bool> CanExecuteFuncGeneric { get; set; }
         private bool AutoDisableWhenProcessing { get; set; }
         private bool processing;
+
         /// <summary>
         /// Indica si está ejecutando el comando
         /// </summary>
@@ -127,11 +138,13 @@ namespace Core.MVVM
                 if (AutoDisableWhenProcessing) RaiseCanExecuteChanged();
             }
         }
+
         /// <summary>
         /// Informa si se han cumplido las reglas de negocio para ejecutar o no el comando
         /// </summary>
         public bool CanExecuteIsEnabled { get => CanExecute(null); }
         #endregion
+
         #region Methods
         /// <summary>
         /// Notifica que las reglas de negocio han cambiado
@@ -141,17 +154,19 @@ namespace Core.MVVM
             RaisePropertyChanged(() => CanExecuteIsEnabled);
             CanExecuteChanged?.Invoke(this, new EventArgs());
         }
+
         /// <summary>
         /// Función sin parámetros que evalúa si se cumplen las condicioens para ejecutar el comando
         /// </summary>
         /// <returns>Si se puede o no ejecutar el comando</returns>
         public bool CanExecute() => CanExecute(null);
+
         /// <summary>
         /// Ejecuta sin parámetros el comando
         /// </summary>
         public virtual void Execute() => Execute(null);
-        public void RaiseCanExecuteDependencies(INotifyPropertyChanged owner, string[]
-       properties)
+
+        public void RaiseCanExecuteDependencies(INotifyPropertyChanged owner, string[] properties)
         {
             owner.PropertyChanged += (s, e) =>
             {
@@ -159,11 +174,13 @@ namespace Core.MVVM
             };
         }
         #endregion
+
         #region ICommand
         /// <summary>
         /// Evento que se lanza al cambiar las reglas de negocio
         /// </summary>
         public event EventHandler CanExecuteChanged;
+
         /// <summary>
         /// Función para evaluar si se cumplen las condiciones para ejecutar el comando
         /// </summary>
@@ -195,12 +212,14 @@ namespace Core.MVVM
                 return CanExecuteFunc.Invoke();
             }
         }
+
         /// <summary>
         /// Ejecuta el comando
         /// </summary>
         /// <param name="parameter">Parámetro opcional del comando</param>
-        public virtual async void Execute(object parameter) =>
-        await ExecuteAsync(parameter);
+        /// 
+        public virtual async void Execute(object parameter) => await ExecuteAsync(parameter);
+        
         public virtual async Task ExecuteAsync(object parameter = null)
         {
             Processing = true;
