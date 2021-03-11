@@ -10,5 +10,7 @@
 
   <Import Project="..\Core.Models\Core.Models.projitems" Label="Shared" />
 
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
+
 
 </Project>
