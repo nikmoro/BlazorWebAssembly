@@ -21,7 +21,9 @@ namespace Core.Lib.OS
         /// <param name="pageKey"></param>
         /// <param name="parameter"></param>
         /// <returns></returns>
-        Task PushModal(string pageKey);
+        Task PushModal(PopupsKeys popUpKey);
+
+        Task PushModal(PopupsKeys popUpKey, params object[] parameter);
 
         /// <summary>Navigate to a page without the page requiring any parameters</summary>
         /// <param name="pageKey"></param>
