@@ -13,6 +13,7 @@
     <Compile Include="$(MSBuildThisFileDirectory)ApiClient\WebApiClient.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Bl\ValueBL.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Enumerations\PagesKeys.cs" />
+    <Compile Include="$(MSBuildThisFileDirectory)Enumerations\PopupsKeys.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)Helpers\Settings.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OS\INavigationService.cs" />
     <Compile Include="$(MSBuildThisFileDirectory)OS\ISettingsStorage.cs" />

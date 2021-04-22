@@ -3,6 +3,7 @@
 namespace Blazor.OS
 {
     using Core.Lib.Enumerations;
+    using Blazored.Modal.Services;
     using Core.Lib.OS;
     using Microsoft.AspNetCore.Components;
     using System.Threading.Tasks;
@@ -10,6 +11,9 @@ namespace Blazor.OS
     public class NavigationService : INavigationService
     {
         internal NavigationManager NavigationManager { get; set; }
+        
+        internal IModalService ModalService { get; set; }
+
         string currentPage, previousPage;
 
         public Task GoBack()
@@ -58,17 +62,22 @@ namespace Blazor.OS
             throw new NotImplementedException();
         }
 
-        public Task PushModal(string pageKey)
-        {
-            throw new NotImplementedException();
-        }
-
         public void NavigatePop()
         {
             throw new NotImplementedException();
         }
 
         public void NavigateToUrl(string url)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task PushModal(PopupsKeys popUpKey)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task PushModal(PopupsKeys popUpKey, params object[] parameter)
         {
             throw new NotImplementedException();
         }
